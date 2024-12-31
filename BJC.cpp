@@ -30,7 +30,7 @@ void createDeck(){
 	deck.push_back(generatedCard);*/
 	Card newCard;
 	//add switch case for loop here
-	for (int i = 0; i < 1; i++){
+	for (int i = 0; i < 13; i++){
 		switch (i) {
 		 case 0:
 		  newCard = {suits::HEARTS, values::TWO};
@@ -38,6 +38,26 @@ void createDeck(){
 		  break;
 		 case 1:
 		  newCard = {suits::HEARTS, values::THREE};
+		  deck.push_back(newCard);
+		  break;
+		 case 2:
+		  newCard = {suits::HEARTS, values::FOUR};
+		  deck.push_back(newCard);
+		  break;
+		 case 3:
+		  newCard = {suits::HEARTS, values::FIVE};
+		  deck.push_back(newCard);
+		  break;
+		 case 4:
+		  newCard = {suits::HEARTS, values::SIX};
+		  deck.push_back(newCard);
+		  break;
+		 case 5:
+		  newCard = {suits::HEARTS, values::SEVEN};
+		  deck.push_back(newCard);
+		  break;
+		 case 6:
+		  newCard = {suits::HEARTS, values::SEVEN};
 		  deck.push_back(newCard);
 		  break;
 		}
