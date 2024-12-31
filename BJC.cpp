@@ -60,6 +60,18 @@ void createDeck(){
 		  newCard = {suits::HEARTS, values::SEVEN};
 		  deck.push_back(newCard);
 		  break;
+		 case 7:
+		  newCard = {suits::HEARTS, values::EIGHT};
+		  deck.push_back(newCard);
+		  break;
+		 case 8:
+		  newCard = {suits::HEARTS, values::NINE};
+		  deck.push_back(newCard);
+		  break;
+		 case 9:
+		  newCard = {suits::HEARTS, values::TEN};
+		  deck.push_back(newCard);
+		  break;
 		}
 	}
 }
