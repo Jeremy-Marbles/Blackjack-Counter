@@ -1,0 +1,4 @@
+## Executables from G++
+*.exe
+
+.env
