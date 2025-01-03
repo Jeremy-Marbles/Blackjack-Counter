@@ -1,4 +1,9 @@
-//blackjack_c(ard)_counter.cpp
+//blackjack card counting practice program
+//by Jeremy Wong
+//This program is meant to help with practice on card counting,
+//with rules placed upon casinos such as deck slicing
+//
+//Implementing the high low system with counting
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -41,11 +46,12 @@ void shuffleDeck()
 {
 	//seed random number generator for shuffling
 	auto RNG = std::mt19937{std::random_device()()};
-	std::uniform_int_distribution d(0, 51);
+	std::uniform_int_distribution d(0, 51); //range between 1 and 52 cards in a standard deck
 	for (int i = 0; i < sizeof(deck); i++) 
 	{
 		//get random seed
-
+		int randomSeed = d(RNG);
+		std::swap(deck[i], deck[randomSeed]);
 	}
 }
 
@@ -55,13 +61,14 @@ int main(int argc, char const *argv[])
 	//Card testCard = {suits::HEARTS, values::THREE};
 	//deck.push_back(testCard);
 	
-	createDeck();
+	createDeck();	//confirmed functional
+	shuffleDeck();  //confirmed functional
+
 	/* TESTCCASE: print out the deck
 	for (const auto& card : deck ) {
 		std::cout << static_cast<int>(card.suit) << " " << static_cast<int>(card.value) << std::endl;
 	}
 	*/
 
-	
 	return 0;
 }
