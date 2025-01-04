@@ -55,6 +55,11 @@ void shuffleDeck()
 	}
 }
 
+//Draw cards by taking from the first element of the shuffled deck array and send it to a pushable hand.
+//1) call new player_hand vector (should be a global variable)
+//2) move() from first deck vector element to player_hand vector (push_back?)
+//3) remove from deck
+
 int main(int argc, char const *argv[])
 {
 	std::cout << "Blackjack CC" << std::endl;
