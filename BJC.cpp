@@ -65,7 +65,10 @@ void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
 	given_hand.push_back(given_deck[0]);
 	std::cout << static_cast<int>(given_hand[0].suit) << " " << static_cast<int>(given_hand[0].value) << std::endl;
 	*/
-
+	given_hand.push_back(given_deck[0]);
+	given_deck.erase(given_deck.begin());
+	
+	std::cout << static_cast<int>(given_deck[0].suit) << " " << static_cast<int>(given_deck[0].value) << std::endl;
 }
 
 
