@@ -25,13 +25,7 @@ struct Card {
 	values value;
 };
 
-//global variables
-//to be added: Multiple decks as per rules in casinos
-std::vector<Card> deck; //initial deck
-std::vector<Card> deck_2; 
-
-
-void createDeck() {
+std::vector<Card> createDeck(std::vector<Card>& deck) {
 	for (int i = 0; i < 4; i++) 
 	{
 		for (int j = 0; j < 13; j++) 
@@ -40,9 +34,12 @@ void createDeck() {
 			deck.push_back(newCard);
 		}
 	}
+
+
+	return deck;
 }
 
-void shuffleDeck() 
+std::vector<Card> shuffleDeck(std::vector<Card>& deck) 
 {
 	//seed random number generator for shuffling
 	auto RNG = std::mt19937{std::random_device()()};
@@ -53,24 +50,39 @@ void shuffleDeck()
 		int randomSeed = d(RNG);
 		std::swap(deck[i], deck[randomSeed]);
 	}
+
+	return deck;
 }
 
 //Draw cards by taking from the first element of the shuffled deck array and send it to a pushable hand.
 //1) call new player_hand vector (should be a global variable)
 //2) move() from first deck vector element to player_hand vector (push_back?)
 //3) remove from deck
+void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
+{
+	/*TESTCASE: print value at given deck
+	std::cout << static_cast<int>(given_deck[0].suit) << " " << static_cast<int>(given_deck[0].value) << std::endl;
+	given_hand.push_back(given_deck[0]);
+	std::cout << static_cast<int>(given_hand[0].suit) << " " << static_cast<int>(given_hand[0].value) << std::endl;
+	*/
+
+}
+
 
 int main(int argc, char const *argv[])
 {
 	std::cout << "Blackjack CC" << std::endl;
 	//Card testCard = {suits::HEARTS, values::THREE};
-	//deck.push_back(testCard);
 	
-	createDeck();	//confirmed functional
-	shuffleDeck();  //confirmed functional
+	std::vector<Card> deck_1;
+	std::vector<Card> player_hand;
+
+	createDeck(deck_1);		//confirmed functional
+	shuffleDeck(deck_1);	//confirmed functional
+	drawCard(deck_1, player_hand);
 
 	/* TESTCCASE: print out the deck
-	for (const auto& card : deck ) {
+	for (const auto& card : deck_1 ) {
 		std::cout << static_cast<int>(card.suit) << " " << static_cast<int>(card.value) << std::endl;
 	}
 	*/
