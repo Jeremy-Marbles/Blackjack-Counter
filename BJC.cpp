@@ -56,8 +56,9 @@ std::vector<Card> shuffleDeck(std::vector<Card>& deck)
 
 //Draw cards by taking from the first element of the shuffled deck array and send it to a pushable hand.
 //1) call new player_hand vector (should be a global variable)
-//2) move() from first deck vector element to player_hand vector (push_back?)
-//3) remove from deck [use erase()]
+//2) check if vector is empty
+//3) move() from first deck vector element to player_hand vector (push_back?)
+//4) remove from deck [use erase()]
 void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
 {
 	/*TESTCASE: print value at given deck
@@ -65,27 +66,39 @@ void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
 	given_hand.push_back(given_deck[0]);
 	std::cout << static_cast<int>(given_hand[0].suit) << " " << static_cast<int>(given_hand[0].value) << std::endl;
 	*/
-	given_hand.push_back(given_deck[0]);
-	given_deck.erase(given_deck.begin());
-	
-	std::cout << static_cast<int>(given_deck[0].suit) << " " << static_cast<int>(given_deck[0].value) << std::endl;
+	if (given_deck.empty()){ 
+		std::cout << "drawCard Error: Empty Vector for given_deck input" << std:endl;
+	} else {
+		given_hand.push_back(given_deck.begin());
+		given_deck.erase(given_deck.begin());
+	}
 
 }
 
-//Check a given hand for total card amount. Return score based on enums. 
-//
+//Check a given hand for total card amount.  
+//1) cycle through hand for enums. while vector[i] != vector.end()
+//2) initiate return int as total value of hand
+//3) If aces are present, change between values if necessary (1 or 11). TODO: figure out logic for aces
 int checkHand(std::vector<Card> given_hand) 
 {
+	if(given_hand.empty()){	//Give an error code for bad given_hand
+		std::cout << "checkHand Error: Empty Vector for given_hand input" << std::endl;
+		return -3
+	}
 	
-	
+	int total = 0;
+
+	return total;
 }
 
-//Purge vectors for next round. Return 1 if hand vector is clear, -1 otherwise
-int resetHand(std::vector<Card>& given_hand) 
+//Purge vectors for next round, or after a deck is empty. Return 1 if vector is clear, -1 otherwise
+int resetVectors(std::vector<Card>& given_hand) 
 {
 	given_hand.clear();
-	bool cleared = TRUE;
-	return 1;
+	if (given_hand.empty()){
+		return 1;
+	}
+	return -1;
 }
 
 int main(int argc, char const *argv[])
