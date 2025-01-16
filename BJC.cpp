@@ -66,10 +66,10 @@ void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
 	given_hand.push_back(given_deck[0]);
 	std::cout << static_cast<int>(given_hand[0].suit) << " " << static_cast<int>(given_hand[0].value) << std::endl;
 	*/
-	if (given_deck.empty()){ 
-		std::cout << "drawCard Error: Empty Vector for given_deck input" << std:endl;
+	if (given_deck.empty()) { 
+		std::cout << "drawCard Error: Empty Vector for given_deck input" << std::endl;
 	} else {
-		given_hand.push_back(given_deck.begin());
+		given_hand.push_back(*given_deck.begin());
 		given_deck.erase(given_deck.begin());
 	}
 
@@ -79,15 +79,54 @@ void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
 //1) cycle through hand for enums. while vector[i] != vector.end()
 //2) initiate return int as total value of hand
 //3) If aces are present, change between values if necessary (1 or 11). TODO: figure out logic for aces
-int checkHand(std::vector<Card> given_hand) 
+//TODO: make a logic function to print out suit of card
+int checkHand(std::vector<Card>& given_hand) 
 {
-	if(given_hand.empty()){	//Give an error code for bad given_hand
+	if(given_hand.empty()) {	//Give an error code for bad given_hand
 		std::cout << "checkHand Error: Empty Vector for given_hand input" << std::endl;
-		return -3
+		return -3;
 	}
 	
 	int total = 0;
-
+	
+	//Hand parsing logic:
+	//1) 
+	for (int i = 0; i < given_hand.size(); i++) 
+	{
+		if (given_hand[i].value != values::ACE){
+		switch (given_hand[i].value){
+		 case values::TWO:	
+		   total += 2;
+		   //TODO: INSERT LOGIC FUNCTION AFTER SUMMING TOTAL OF RANKS 
+		   break;
+		 case values::THREE:
+		   total += 3;
+		   //LOGIC
+		   break;
+		 case values::FOUR:
+		   total += 4;
+		   break;
+		 case values::FIVE:
+		   total += 5;
+		   break;
+		 case values::SIX:
+		   total += 6;
+		   break;
+		 case values::SEVEN:
+		   total += 7;
+		   break;
+		 case values::EIGHT:
+		   total += 8;
+		   break;
+		 case values::NINE:
+		   total += 9;
+		   break;
+		 case values::TEN:
+		   total += 10;
+		   break;
+			}
+		}
+	}
 	return total;
 }
 
