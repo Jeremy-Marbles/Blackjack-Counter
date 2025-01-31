@@ -90,45 +90,129 @@ int checkHand(std::vector<Card>& given_hand)
 	int total = 0;
 	
 	//Hand parsing logic:
-	//1) 
+	//1) Check for aces first, then add up the total of the hand
+	//2) If aces are present, add 11 to total, then check if total is over 21. If so, subtract 10 from total
 	for (int i = 0; i < given_hand.size(); i++) 
 	{
 		if (given_hand[i].value != values::ACE){
-		switch (given_hand[i].value){
-		 case values::TWO:	
-		   total += 2;
-		   //TODO: INSERT LOGIC FUNCTION AFTER SUMMING TOTAL OF RANKS 
-		   break;
-		 case values::THREE:
-		   total += 3;
-		   //LOGIC
-		   break;
-		 case values::FOUR:
-		   total += 4;
-		   break;
-		 case values::FIVE:
-		   total += 5;
-		   break;
-		 case values::SIX:
-		   total += 6;
-		   break;
-		 case values::SEVEN:
-		   total += 7;
-		   break;
-		 case values::EIGHT:
-		   total += 8;
-		   break;
-		 case values::NINE:
-		   total += 9;
-		   break;
-		 case values::TEN:
-		   total += 10;
-		   break;
+			switch (given_hand[i].value){
+		 	 case values::TWO:	
+		   	  total += 2;
+		//TODO: INSERT LOGIC FUNCTION AFTER SUMMING TOTAL OF RANKS 
+		   	  break;
+		 	case values::THREE:
+		   	 total += 3;
+		//LOGIC
+		   	 break;
+		 	case values::FOUR:
+		   	 total += 4;
+		   	 break;
+		 	case values::FIVE:
+		  	 total += 5;
+		  	 break;
+			case values::SIX:
+		  	 total += 6;
+		  	 break;
+		 	case values::SEVEN:
+		 	 total += 7;
+		 	 break;
+		 	case values::EIGHT:
+		 	 total += 8;
+		  	 break;
+		 	case values::NINE:
+		  	 total += 9;
+		  	 break;
+		 	case values::TEN:
+		  	 total += 10;
+		  	 break;
+		 	case values::JACK:
+		  	 total += 10;
+		  	 break;
+		 	case values::QUEEN:
+		  	 total += 10;
+		  	 break;
+		 	case values::KING:
+		  	 total += 10;
+		  	 break;
 			}
 		}
+
+		if (given_hand[i].value == values::ACE){
+			if (total != 21) {
+				total += 11;
+			} else if (total > 21) {
+				total = total - 10;
+			}
+		}
+
 	}
 	return total;
 }
+
+void printCard(std::vector<Card> play_hand, int index) 
+{
+	std::string suit;
+	std::string value;
+	switch (play_hand[index].suit) {
+	case suits::HEARTS:
+		suit = "Hearts";
+		break;
+	case suits::CLUBS:
+		suit = "Clubs";
+		break;
+	case suits::SPADES:
+		suit = "Spades";
+		break;
+	case suits::DIAMONDS:
+		suit = "Diamonds";
+		break;
+	}
+
+	switch (play_hand[index].value) {
+	case values::TWO:
+		value = "Two";
+		break;
+	case values::THREE:
+		value = "Three";
+		break;
+	case values::FOUR:
+		value = "Four";
+		break;
+	case values::FIVE:
+		value = "Five";
+		break;
+	case values::SIX:
+		value = "Six";
+		break;
+	case values::SEVEN:
+		value = "Seven";
+		break;
+	case values::EIGHT:
+		value = "Eight";
+		break;
+	case values::NINE:
+		value = "Nine";
+		break;
+	case values::TEN:
+		value = "Ten";
+		break;
+	case values::JACK:
+		value = "Jack";
+		break;
+	case values::QUEEN:
+		value = "Queen";
+		break;
+	case values::KING:
+		value = "King";
+		break;
+	case values::ACE:
+		value = "Ace";
+		break;
+	}
+
+	std::cout << value << " of " << suit << std::endl;
+}
+
 
 //Purge vectors for next round, or after a deck is empty. Return 1 if vector is clear, -1 otherwise
 int resetVectors(std::vector<Card>& given_hand) 
