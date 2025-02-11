@@ -98,41 +98,51 @@ int checkHand(std::vector<Card>& given_hand)
 			switch (given_hand[i].value){
 		 	 case values::TWO:	
 		   	  total += 2;
-		//TODO: INSERT LOGIC FUNCTION AFTER SUMMING TOTAL OF RANKS 
+			  printCard(given_hand, i);
 		   	  break;
 		 	case values::THREE:
 		   	 total += 3;
-		//LOGIC
+			 printCard(given_hand, i);
 		   	 break;
 		 	case values::FOUR:
 		   	 total += 4;
+			 printCard(given_hand, i);
 		   	 break;
 		 	case values::FIVE:
 		  	 total += 5;
+			 printCard(given_hand, i);
 		  	 break;
 			case values::SIX:
 		  	 total += 6;
+			 printCard(given_hand, i);
 		  	 break;
 		 	case values::SEVEN:
 		 	 total += 7;
+			 printCard(given_hand, i);
 		 	 break;
 		 	case values::EIGHT:
 		 	 total += 8;
+			 printCard(given_hand, i);
 		  	 break;
 		 	case values::NINE:
 		  	 total += 9;
+			 printCard(given_hand, i);
 		  	 break;
 		 	case values::TEN:
 		  	 total += 10;
+			 printCard(given_hand, i);
 		  	 break;
 		 	case values::JACK:
 		  	 total += 10;
+			 printCard(given_hand, i);
 		  	 break;
 		 	case values::QUEEN:
 		  	 total += 10;
+			 printCard(given_hand, i);
 		  	 break;
 		 	case values::KING:
 		  	 total += 10;
+			 printCard(given_hand, i);
 		  	 break;
 			}
 		}
@@ -234,7 +244,10 @@ int main(int argc, char const *argv[])
 
 	createDeck(deck_1);		//confirmed functional
 	shuffleDeck(deck_1);	//confirmed functional
-	drawCard(deck_1, player_hand);
+	drawCard(deck_1, player_hand); //confirmed functional
+	//printCard(player_hand, 0); //confirmed functional
+
+
 
 	/* TESTCASE: print out the deck
 	for (const auto& card : deck_1 ) {
