@@ -75,11 +75,75 @@ void drawCard(std::vector<Card>& given_deck, std::vector<Card>& given_hand)
 
 }
 
+void printCard(std::vector<Card> play_hand, int index) 
+{
+	std::string suit;
+	std::string value;
+	switch (play_hand[index].suit) {
+	case suits::HEARTS:
+		suit = "Hearts";
+		break;
+	case suits::CLUBS:
+		suit = "Clubs";
+		break;
+	case suits::SPADES:
+		suit = "Spades";
+		break;
+	case suits::DIAMONDS:
+		suit = "Diamonds";
+		break;
+	}
+
+	switch (play_hand[index].value) {
+	case values::TWO:
+		value = "Two";
+		break;
+	case values::THREE:
+		value = "Three";
+		break;
+	case values::FOUR:
+		value = "Four";
+		break;
+	case values::FIVE:
+		value = "Five";
+		break;
+	case values::SIX:
+		value = "Six";
+		break;
+	case values::SEVEN:
+		value = "Seven";
+		break;
+	case values::EIGHT:
+		value = "Eight";
+		break;
+	case values::NINE:
+		value = "Nine";
+		break;
+	case values::TEN:
+		value = "Ten";
+		break;
+	case values::JACK:
+		value = "Jack";
+		break;
+	case values::QUEEN:
+		value = "Queen";
+		break;
+	case values::KING:
+		value = "King";
+		break;
+	case values::ACE:
+		value = "Ace";
+		break;
+	}
+
+	std::cout << value << " of " << suit << std::endl;
+}
+
 //Check a given hand for total card amount.  
 //1) cycle through hand for enums. while vector[i] != vector.end()
 //2) initiate return int as total value of hand
 //3) If aces are present, change between values if necessary (1 or 11). TODO: figure out logic for aces
-//TODO: make a logic function to print out suit of card
+//COMPLETE: make a logic function to print out suit of card
 int checkHand(std::vector<Card>& given_hand) 
 {
 	if(given_hand.empty()) {	//Give an error code for bad given_hand
@@ -159,69 +223,6 @@ int checkHand(std::vector<Card>& given_hand)
 	return total;
 }
 
-void printCard(std::vector<Card> play_hand, int index) 
-{
-	std::string suit;
-	std::string value;
-	switch (play_hand[index].suit) {
-	case suits::HEARTS:
-		suit = "Hearts";
-		break;
-	case suits::CLUBS:
-		suit = "Clubs";
-		break;
-	case suits::SPADES:
-		suit = "Spades";
-		break;
-	case suits::DIAMONDS:
-		suit = "Diamonds";
-		break;
-	}
-
-	switch (play_hand[index].value) {
-	case values::TWO:
-		value = "Two";
-		break;
-	case values::THREE:
-		value = "Three";
-		break;
-	case values::FOUR:
-		value = "Four";
-		break;
-	case values::FIVE:
-		value = "Five";
-		break;
-	case values::SIX:
-		value = "Six";
-		break;
-	case values::SEVEN:
-		value = "Seven";
-		break;
-	case values::EIGHT:
-		value = "Eight";
-		break;
-	case values::NINE:
-		value = "Nine";
-		break;
-	case values::TEN:
-		value = "Ten";
-		break;
-	case values::JACK:
-		value = "Jack";
-		break;
-	case values::QUEEN:
-		value = "Queen";
-		break;
-	case values::KING:
-		value = "King";
-		break;
-	case values::ACE:
-		value = "Ace";
-		break;
-	}
-
-	std::cout << value << " of " << suit << std::endl;
-}
 
 
 //Purge vectors for next round, or after a deck is empty. Return 1 if vector is clear, -1 otherwise
@@ -246,7 +247,8 @@ int main(int argc, char const *argv[])
 	shuffleDeck(deck_1);	//confirmed functional
 	drawCard(deck_1, player_hand); //confirmed functional
 	//printCard(player_hand, 0); //confirmed functional
-
+	std::cout << "Current card amount: " << deck_1.size() << std::endl;
+	std::cout << checkHand(player_hand) << std::endl;
 
 
 	/* TESTCASE: print out the deck
