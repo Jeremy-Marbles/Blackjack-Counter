@@ -223,7 +223,25 @@ int checkHand(std::vector<Card>& given_hand)
 	return total;
 }
 
+//Start high low (running count) calculation
+//NOTE: Ace, face cards, 10s are -1. 2-6 are +1. 7-9 do not give (dis)advantage
 
+int calcHiLow(std::vector<Card> player_hand, std::vector<card> dealer_hand)
+{
+	int advantage = 0;
+
+	for (int i = 0; i < player_hand.size(); i++)
+	{
+		if (player_hand[i] == values::ACE || player_hand[i] == values::TENS) {
+			advantage -= 1;
+		} else if (player_hand[i] == values::KING || player_hand[i] == values::QUEEN || player_hand[i] == values::JACK) {
+			advantage -= 1;
+		}
+	}
+
+	return advantage;
+
+}
 
 //Purge vectors for next round, or after a deck is empty. Return 1 if vector is clear, -1 otherwise
 int resetVectors(std::vector<Card>& given_hand) 
