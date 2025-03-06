@@ -226,16 +226,54 @@ int checkHand(std::vector<Card>& given_hand)
 //Start high low (running count) calculation
 //NOTE: Ace, face cards, 10s are -1. 2-6 are +1. 7-9 do not give (dis)advantage
 
-int calcHiLow(std::vector<Card> player_hand, std::vector<card> dealer_hand)
+int calcHiLow(std::vector<Card> player_hand, std::vector<Card> dealer_hand)
 {
 	int advantage = 0;
+	int player_advantage = 0, dealer_advantage = 0;
 
 	for (int i = 0; i < player_hand.size(); i++)
 	{
-		if (player_hand[i] == values::ACE || player_hand[i] == values::TENS) {
-			advantage -= 1;
-		} else if (player_hand[i] == values::KING || player_hand[i] == values::QUEEN || player_hand[i] == values::JACK) {
-			advantage -= 1;
+		switch(player_hand[i].value)
+		{
+			case values::TWO:
+			case values::THREE:
+			case values::FOUR:
+			case values::FIVE:
+			case values::SIX:
+				player_advantage++;
+				break;
+			case values::TEN:
+			case values::JACK:
+			case values::QUEEN:
+			case values::KING:
+			case values::ACE:
+				player_advantage--;
+				break;
+			default:
+				break;
+		}
+	}
+	
+	for (int i = 0; i < dealer_hand.size(); i++)
+	{
+		switch(dealer_hand[i].value)
+		{
+			case values::TWO:
+			case values::THREE:
+			case values::FOUR:
+			case values::FIVE:
+			case values::SIX:
+				dealer_advantage++;
+				break;
+			case values::TEN:
+			case values::JACK:
+			case values::QUEEN:
+			case values::KING:
+			case values::ACE:
+				dealer_advantage--;
+				break;
+			default:
+				break;
 		}
 	}
 
