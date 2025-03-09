@@ -281,6 +281,18 @@ int calcHiLow(std::vector<Card> player_hand, std::vector<Card> dealer_hand)
 
 }
 
+int getTrueCount(int advantage; int currentDecks)
+{
+	if (advantage =< -1) {
+		std::cout << "True count is less than zero: aborting calculation." << std::endl;
+		return -1;
+	}
+
+	int trueCount = advantage / currentDecks;
+
+	return trueCount;
+}
+
 //Purge vectors for next round, or after a deck is empty. Return 1 if vector is clear, -1 otherwise
 int resetVectors(std::vector<Card>& given_hand) 
 {
@@ -293,25 +305,27 @@ int resetVectors(std::vector<Card>& given_hand)
 
 int main(int argc, char const *argv[])
 {
-	std::cout << "Blackjack CC" << std::endl;
-	//Card testCard = {suits::HEARTS, values::THREE};
+	std::cout << "Blackjack Classic Count" << std::endl;
 	
-	std::vector<Card> deck_1;
+	std::vector<Card> deck_1;		//Used in final main function
 	std::vector<Card> player_hand;
+	int currentAmount;
 
-	createDeck(deck_1);		//confirmed functional
-	shuffleDeck(deck_1);	//confirmed functional
-	drawCard(deck_1, player_hand); //confirmed functional
-	//printCard(player_hand, 0); //confirmed functional
-	std::cout << "Current card amount: " << deck_1.size() << std::endl;
-	std::cout << checkHand(player_hand) << std::endl;
+	//START MAIN FUNCTIONALITY
+	std::cout << "Set initial buy-in: ";	//Will not check for negative values
+	std::cin >> currentAmount;
+	std::endl;
 
+	bool quitGame = false;
+	int input = 0;
+	std::cout << "Quit the game by setting '9' as an input" << std::endl;
+	while (quitGame != true) {
+		if (input == 9) {
+			quitGame = true;
+		}
 
-	/* TESTCASE: print out the deck
-	for (const auto& card : deck_1 ) {
-		std::cout << static_cast<int>(card.suit) << " " << static_cast<int>(card.value) << std::endl;
+		std::cin >> input;
 	}
-	*/
 
 	return 0;
 }
