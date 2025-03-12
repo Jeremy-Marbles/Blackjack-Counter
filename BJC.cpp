@@ -281,9 +281,9 @@ int calcHiLow(std::vector<Card> player_hand, std::vector<Card> dealer_hand)
 
 }
 
-int getTrueCount(int advantage; int currentDecks)
+int getTrueCount(int advantage, int currentDecks)
 {
-	if (advantage =< -1) {
+	if (advantage <= -1) {
 		std::cout << "True count is less than zero: aborting calculation." << std::endl;
 		return -1;
 	}
@@ -308,23 +308,36 @@ int main(int argc, char const *argv[])
 	std::cout << "Blackjack Classic Count" << std::endl;
 	
 	std::vector<Card> deck_1;		//Used in final main function
-	std::vector<Card> player_hand;
+	std::vector<Card> player_hand, std::vector<Card> dealer_hand;
 	int currentAmount;
 
 	//START MAIN FUNCTIONALITY
 	std::cout << "Set initial buy-in: ";	//Will not check for negative values
 	std::cin >> currentAmount;
-	std::endl;
+	std::cout << "Bet amount: $" << currentAmount << std::endl;
+	std::cout << "Generating and shuffling deck 1" << std::endl;
+	createDeck(deck_1);
+	//TESTCASE: Print last card
+	//std::cout << static_cast<int>(deck_1[51].suit) << " " << static_cast<int>(deck_1[51].value) << std::endl;
+	shuffleDeck(deck_1);
+	//TESTCASE: Print last card for randomized choice
+	//std::cout << static_cast<int>(deck_1[51].suit) << " " << static_cast<int>(deck_1[51].value) << std::endl;
+	
+	
 
 	bool quitGame = false;
 	int input = 0;
 	std::cout << "Quit the game by setting '9' as an input" << std::endl;
 	while (quitGame != true) {
+		std::cout << "Select Option: " << std::endl;
+		std::cout << "(1)Draw Card - (2)Hold";
+		std::cin >> input;
+
 		if (input == 9) {
 			quitGame = true;
 		}
 
-		std::cin >> input;
+
 	}
 
 	return 0;
