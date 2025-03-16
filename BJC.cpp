@@ -326,15 +326,28 @@ int main(int argc, char const *argv[])
 	
 
 	bool quitGame = false;
-	int input = 0;
+	int input = 11, playerIncrement = 0;	//FIXME: convert int increment into vector size increment
 	std::cout << "Quit the game by setting '9' as an input" << std::endl;
 	while (quitGame != true) {
 		std::cout << "Select Option: " << std::endl;
-		std::cout << "(1)Draw Card - (2)Hold";
+		//TODO: add logic for doubling bets
+		//FIXME: Reroute logic for calculating score
+		std::cout << "(0)Draw Card - (1)Stand"; << std::endl;
 		std::cin >> input;
-
+		
+		if (dealer_hand.empty()) {
+			drawCard(dealer_hand);
+			printCard(dealer_hand, 0);
+		}
+		
 		if (input == 9) {
 			quitGame = true;
+		}
+		
+		if (input == 0) {
+			drawCard(player_hand);
+			printCard(player_hand, playerIncrement);
+			playerIncrement++;
 		}
 
 
