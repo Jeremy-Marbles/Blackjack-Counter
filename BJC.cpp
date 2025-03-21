@@ -308,7 +308,8 @@ int main(int argc, char const *argv[])
 	std::cout << "Blackjack Classic Count" << std::endl;
 	
 	std::vector<Card> deck_1;		//Used in final main function
-	std::vector<Card> player_hand, std::vector<Card> dealer_hand;
+	std::vector<Card> player_hand; 
+	std::vector<Card> dealer_hand;
 	int currentAmount;
 
 	//START MAIN FUNCTIONALITY
@@ -326,29 +327,55 @@ int main(int argc, char const *argv[])
 	
 
 	bool quitGame = false;
-	int input = 11, playerIncrement = 0;	//FIXME: convert int increment into vector size increment
-	std::cout << "Quit the game by setting '9' as an input" << std::endl;
+	int input = 11, playerIncrement = 0, dealerIncrement = 0; //FIXME: convert int increment into vector size increment
+	std::cout << "Force Quit the game by setting '10' as an input" << std::endl;
 	while (quitGame != true) {
-		std::cout << "Select Option: " << std::endl;
+	
 		//TODO: add logic for doubling bets
 		//FIXME: Reroute logic for calculating score
-		std::cout << "(0)Draw Card - (1)Stand"; << std::endl;
-		std::cin >> input;
 		
+		 //draw beginning cards
+		std::cout << "\nBeginning round" << std::endl;
 		if (dealer_hand.empty()) {
-			drawCard(dealer_hand);
-			printCard(dealer_hand, 0);
+			drawCard(deck_1, dealer_hand);
+			std::cout << "Dealer's hand: " << std::endl;
+			printCard(dealer_hand, dealerIncrement);
+			dealerIncrement++;
 		}
-		
-		if (input == 9) {
+
+		std::cout << std::endl;
+
+		if (player_hand.empty()) {	//populate 
+			drawCard(deck_1, player_hand);
+			drawCard(deck_1, player_hand);
+			playerIncrement = 2;
+			std::cout << "Player's hand: " << std::endl;
+			for (int i = 0; i < player_hand.size(); i++) {
+				printCard(player_hand, i);
+			}
+		}
+			
+		std::cout << "Select Option: " << std::endl;
+		std::cout << "(0)Draw Card - (1)Stand - (2)Get Current Score" << std::endl;
+		std::cin >> input;
+
+		if (input == 10) {
 			quitGame = true;
 		}
 		
 		if (input == 0) {
-			drawCard(player_hand);
-			printCard(player_hand, playerIncrement);
+			drawCard(deck_1, player_hand);
 			playerIncrement++;
+			std::cout << "\nPlayer's hand: " << std::endl;
+			for (int i = 0; i < player_hand.size(); i++) {
+				printCard(player_hand, i);
+			}
 		}
+
+		if (input == 1) {
+			int playerTally = checkHand(player_hand);
+		}
+
 
 
 	}
