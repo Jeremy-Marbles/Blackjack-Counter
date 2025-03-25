@@ -331,10 +331,15 @@ int main(int argc, char const *argv[])
 	std::cout << "Force Quit the game by setting '10' as an input" << std::endl;
 	while (quitGame != true) {
 	
-		//TODO: add logic for doubling bets
+		//TODO: add logic for doubling bets, Putting down a bet
 		//FIXME: Reroute logic for calculating score
+
+		std::cout << "Place down bet: ";
+		int newBet = 0;
+		std::cin >> newBet;
+		currentAmount -= newBet;
+		std::cout << "\nMoney pool: " << currentAmount << " + " << newBet << std::endl; 
 		
-		 //draw beginning cards
 		std::cout << "\nBeginning round" << std::endl;
 		if (dealer_hand.empty()) {
 			drawCard(deck_1, dealer_hand);
@@ -373,7 +378,13 @@ int main(int argc, char const *argv[])
 		}
 
 		if (input == 1) {
+			//TODO: confirm blackjack win or tie logic
 			int playerTally = checkHand(player_hand);
+			if (playerTally > 21) {
+				std::cout << "Bust! Lost the round." << std::endl;
+			} else if (playerTally <= 21) {
+				
+			}
 		}
 
 
