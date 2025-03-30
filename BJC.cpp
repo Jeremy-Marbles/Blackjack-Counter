@@ -328,12 +328,13 @@ int main(int argc, char const *argv[])
 
 	bool quitGame = false;
 	int input = 11, playerIncrement = 0, dealerIncrement = 0; //FIXME: convert int increment into vector size increment
-	std::cout << "Force Quit the game by setting '10' as an input" << std::endl;
+	std::cout << "Force Quit the game by setting '10' as an input\n" << std::endl;
 	while (quitGame != true) {
 	
 		//TODO: add logic for doubling bets, Putting down a bet
 		//FIXME: Reroute logic for calculating score
 
+		std::cout << "\nCash: $" << currentAmount << std::endl;
 		std::cout << "Place down bet: ";
 		int newBet = 0;
 		std::cin >> newBet;
@@ -366,6 +367,7 @@ int main(int argc, char const *argv[])
 
 		if (input == 10) {
 			quitGame = true;
+			printf("\nFinal cash holding: ", currentAmount);
 		}
 		
 		if (input == 0) {
@@ -378,17 +380,45 @@ int main(int argc, char const *argv[])
 		}
 
 		if (input == 1) {
-			//TODO: confirm blackjack win or tie logic
 			int playerTally = checkHand(player_hand);
 			if (playerTally > 21) {
 				std::cout << "Bust! Lost the round." << std::endl;
-			} else if (playerTally <= 21) {
 				
+			} else if (playerTally <= 21) {
+				int dealerTally = 0;
+				do {
+					drawCard(deck_1, dealer_hand);
+					dealerIncrement++;
+					for (int i = 0; i < dealer_hand.size(); i++) {
+						std::cout << "\nDealer draws new card..." << std::endl;
+						printCard(dealer_hand, i);
+						printf("\n");
+					}
+					dealerTally = checkHand(dealer_hand);
+				}
+				while (dealerTally <= 21);
+				
+				std::cout << "Dealer total: " << dealerTally << std::endl;
+				if (dealerTally > 21) {
+					std::cout << "House busts! You win: $" << newBet * 2 << std::endl;
+					currentAmount = currentAmount + (newBet * 2);
+				}
+
+				if (dealerTally >= 17) {
+					std::cout << "House stands at " << dealerTally << std::endl;
+					if (dealerTally > playerTally) {
+						std::cout << "House wins over the player's hand!" << std::endl;
+						std::cout << dealerTally << " over " << playerTally << std::endl;
+					}
+
+					if (dealerTally < playerTally) {
+						std::cout << "Player wins over the house!" << std::endl;
+						std::cout << playerTally << " over " << dealerTally << std::endl;
+						currentAmount = currentAmount + (newBet * 2);
+					}
+				}
 			}
 		}
-
-
-
 	}
 
 	return 0;
