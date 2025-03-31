@@ -253,7 +253,9 @@ int calcHiLow(std::vector<Card> player_hand, std::vector<Card> dealer_hand)
 				break;
 		}
 	}
-	
+	printf("Player advantage: %d\n", player_advantage);
+	advantage += player_advantage;	//add player advantage to running count
+
 	for (int i = 0; i < dealer_hand.size(); i++)
 	{
 		switch(dealer_hand[i].value)
@@ -276,6 +278,8 @@ int calcHiLow(std::vector<Card> player_hand, std::vector<Card> dealer_hand)
 				break;
 		}
 	}
+	printf("Dealer advantage: %d\n", dealer_advantage);
+	advantage += dealer_advantage;	//add dealer advantage to running count
 
 	return advantage;
 
@@ -326,21 +330,24 @@ int main(int argc, char const *argv[])
 	
 	
 
-	bool quitGame = false;
+	bool quitGame = false, betPlaced = false;
 	int input = 11, playerIncrement = 0, dealerIncrement = 0; //FIXME: convert int increment into vector size increment
 	std::cout << "Force Quit the game by setting '10' as an input\n" << std::endl;
 	while (quitGame != true) {
 	
-		//TODO: add logic for doubling bets, Putting down a bet
-		//FIXME: Reroute logic for calculating score
-
-		std::cout << "\nCash: $" << currentAmount << std::endl;
-		std::cout << "Place down bet: ";
+		//TODO: add logic for doubling bets
 		int newBet = 0;
-		std::cin >> newBet;
-		currentAmount -= newBet;
-		std::cout << "\nMoney pool: " << currentAmount << " + " << newBet << std::endl; 
-		
+		if (betPlaced == false) {
+			std::cout << "\nCash: $" << currentAmount << std::endl;
+			std::cout << "Place down bet: ";
+			std::cin >> input;
+			input = std::max(input, 0);
+			newBet = input;
+			currentAmount -= newBet;
+			std::cout << "\nMoney pool: " << currentAmount << " + " << newBet << std::endl; 
+		}
+		betPlaced = true;
+
 		std::cout << "\nBeginning round" << std::endl;
 		if (dealer_hand.empty()) {
 			drawCard(deck_1, dealer_hand);
@@ -367,7 +374,7 @@ int main(int argc, char const *argv[])
 
 		if (input == 10) {
 			quitGame = true;
-			printf("\nFinal cash holding: ", currentAmount);
+			printf("\nFinal cash holding: %d\n", currentAmount);
 		}
 		
 		if (input == 0) {
@@ -385,6 +392,7 @@ int main(int argc, char const *argv[])
 				std::cout << "Bust! Lost the round." << std::endl;
 				
 			} else if (playerTally <= 21) {
+				//FIXME 
 				int dealerTally = 0;
 				do {
 					drawCard(deck_1, dealer_hand);
@@ -403,8 +411,7 @@ int main(int argc, char const *argv[])
 					std::cout << "House busts! You win: $" << newBet * 2 << std::endl;
 					currentAmount = currentAmount + (newBet * 2);
 				}
-
-				if (dealerTally >= 17) {
+				else if (dealerTally >= 17) {
 					std::cout << "House stands at " << dealerTally << std::endl;
 					if (dealerTally > playerTally) {
 						std::cout << "House wins over the player's hand!" << std::endl;
@@ -418,7 +425,21 @@ int main(int argc, char const *argv[])
 					}
 				}
 			}
+			betPlaced = false;	//reset betPlaced for next round
+			resetVectors(player_hand);
+			resetVectors(dealer_hand);
+			playerIncrement = 0;	//reset increment for next round
+			dealerIncrement = 0;
 		}
+
+		if (input == 2) {
+			int trueCount = calcHiLow(player_hand, dealer_hand);
+			std::cout << "Current advantage: " << trueCount << std::endl;
+			
+			getTrueCount(trueCount, 1); //TODO: Add multiple decks
+			std::cout << "True Count: " << trueCount << std::endl;
+		}
+
 	}
 
 	return 0;
