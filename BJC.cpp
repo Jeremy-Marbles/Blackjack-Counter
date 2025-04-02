@@ -1,6 +1,6 @@
 //blackjack card counting practice program
 //by Jeremy Wong
-//This program is meant to help with practice on card counting,
+//This monolith program is meant to help with practice on card counting,
 //with rules placed upon casinos such as deck slicing
 //
 //Implementing the high low system with counting
@@ -34,7 +34,6 @@ std::vector<Card> createDeck(std::vector<Card>& deck) {
 			deck.push_back(newCard);
 		}
 	}
-
 
 	return deck;
 }
@@ -143,7 +142,6 @@ void printCard(std::vector<Card> play_hand, int index)
 //1) cycle through hand for enums. while vector[i] != vector.end()
 //2) initiate return int as total value of hand
 //3) If aces are present, change between values if necessary (1 or 11). TODO: figure out logic for aces
-//COMPLETE: make a logic function to print out suit of card
 int checkHand(std::vector<Card>& given_hand) 
 {
 	if(given_hand.empty()) {	//Give an error code for bad given_hand
@@ -223,9 +221,7 @@ int checkHand(std::vector<Card>& given_hand)
 	return total;
 }
 
-//Start high low (running count) calculation
 //NOTE: Ace, face cards, 10s are -1. 2-6 are +1. 7-9 do not give (dis)advantage
-
 int calcHiLow(std::vector<Card> player_hand, std::vector<Card> dealer_hand)
 {
 	int advantage = 0;
@@ -311,7 +307,7 @@ int main(int argc, char const *argv[])
 {
 	std::cout << "Blackjack Classic Count" << std::endl;
 	
-	std::vector<Card> deck_1;		//Used in final main function
+	std::vector<Card> deck_1;
 	std::vector<Card> player_hand; 
 	std::vector<Card> dealer_hand;
 	int currentAmount;
@@ -328,23 +324,22 @@ int main(int argc, char const *argv[])
 	//TESTCASE: Print last card for randomized choice
 	//std::cout << static_cast<int>(deck_1[51].suit) << " " << static_cast<int>(deck_1[51].value) << std::endl;
 	
-	
-
 	bool quitGame = false, betPlaced = false;
 	int input = 11, playerIncrement = 0, dealerIncrement = 0; //FIXME: convert int increment into vector size increment
 	std::cout << "Force Quit the game by setting '10' as an input\n" << std::endl;
+	std::cout << "Dealer stands at or over 17." << std::endl;
 	while (quitGame != true) {
 	
 		//TODO: add logic for doubling bets
 		int newBet = 0;
 		if (betPlaced == false) {
 			std::cout << "\nCash: $" << currentAmount << std::endl;
-			std::cout << "Place down bet: ";
+			std::cout << "Place down bet: $";
 			std::cin >> input;
 			input = std::max(input, 0);
 			newBet = input;
 			currentAmount -= newBet;
-			std::cout << "\nMoney pool: " << currentAmount << " + " << newBet << std::endl; 
+			std::cout << "\nMoney pool: $" << currentAmount << " + $" << newBet << std::endl; 
 		}
 		betPlaced = true;
 
@@ -358,7 +353,7 @@ int main(int argc, char const *argv[])
 
 		std::cout << std::endl;
 
-		if (player_hand.empty()) {	//populate 
+		if (player_hand.empty()) {	
 			drawCard(deck_1, player_hand);
 			drawCard(deck_1, player_hand);
 			playerIncrement = 2;
@@ -369,7 +364,7 @@ int main(int argc, char const *argv[])
 		}
 			
 		std::cout << "Select Option: " << std::endl;
-		std::cout << "(0)Draw Card - (1)Stand - (2)Get Current Score" << std::endl;
+		std::cout << "(0)Draw Card - (1)Stand - (2)Get Current Score - (3)Check deck size" << std::endl;
 		std::cin >> input;
 
 		if (input == 10) {
@@ -392,20 +387,18 @@ int main(int argc, char const *argv[])
 				std::cout << "Bust! Lost the round." << std::endl;
 				
 			} else if (playerTally <= 21) {
-				//FIXME 
 				int dealerTally = 0;
 				do {
 					drawCard(deck_1, dealer_hand);
 					dealerIncrement++;
-					for (int i = 0; i < dealer_hand.size(); i++) {
-						std::cout << "\nDealer draws new card..." << std::endl;
-						printCard(dealer_hand, i);
-						printf("\n");
-					}
 					dealerTally = checkHand(dealer_hand);
 				}
-				while (dealerTally <= 21);
+				while (dealerTally <= 17);
 				
+				for (int i = 0; i < dealer_hand.size(); i++) {
+					printCard(dealer_hand, i);
+				}
+
 				std::cout << "Dealer total: " << dealerTally << std::endl;
 				if (dealerTally > 21) {
 					std::cout << "House busts! You win: $" << newBet * 2 << std::endl;
@@ -417,18 +410,20 @@ int main(int argc, char const *argv[])
 						std::cout << "House wins over the player's hand!" << std::endl;
 						std::cout << dealerTally << " over " << playerTally << std::endl;
 					}
-
-					if (dealerTally < playerTally) {
+					else if (dealerTally < playerTally) {
 						std::cout << "Player wins over the house!" << std::endl;
 						std::cout << playerTally << " over " << dealerTally << std::endl;
 						currentAmount = currentAmount + (newBet * 2);
+					} else { 
+						std::cout << "It's a tie! You get your bet back." << std::endl;
+						currentAmount += newBet;
 					}
 				}
 			}
 			betPlaced = false;	//reset betPlaced for next round
 			resetVectors(player_hand);
 			resetVectors(dealer_hand);
-			playerIncrement = 0;	//reset increment for next round
+			playerIncrement = 0;	
 			dealerIncrement = 0;
 		}
 
@@ -436,8 +431,14 @@ int main(int argc, char const *argv[])
 			int trueCount = calcHiLow(player_hand, dealer_hand);
 			std::cout << "Current advantage: " << trueCount << std::endl;
 			
-			getTrueCount(trueCount, 1); //TODO: Add multiple decks
-			std::cout << "True Count: " << trueCount << std::endl;
+			if (trueCount >= 0) {
+				getTrueCount(trueCount, 1); //TODO: add multiple decks
+				std::cout << "True Count: " << trueCount << std::endl;
+			}
+		}
+
+		if (input == 3) { 
+			std::cout << "Deck size: " << deck_1.size() << " cards in shoe" << std::endl;
 		}
 
 	}
