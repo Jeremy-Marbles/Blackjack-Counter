@@ -1,5 +1,5 @@
-## Executables from G++
-*.exe
+## Executables from G++ 
+## *.exe
 
 .env
 

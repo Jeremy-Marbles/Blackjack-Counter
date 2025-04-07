@@ -326,7 +326,7 @@ int main(int argc, char const *argv[])
 	
 	bool quitGame = false, betPlaced = false;
 	int input = 11, playerIncrement = 0, dealerIncrement = 0; //FIXME: convert int increment into vector size increment
-	std::cout << "Force Quit the game by setting '10' as an input\n" << std::endl;
+	std::cout << "Force Quit the game by setting '-1' as an input\n" << std::endl;
 	std::cout << "Dealer stands at or over 17." << std::endl;
 	while (quitGame != true) {
 	
@@ -367,7 +367,7 @@ int main(int argc, char const *argv[])
 		std::cout << "(0)Draw Card - (1)Stand - (2)Get Current Score - (3)Check deck size" << std::endl;
 		std::cin >> input;
 
-		if (input == 10) {
+		if (input == -1) {
 			quitGame = true;
 			printf("\nFinal cash holding: %d\n", currentAmount);
 		}
